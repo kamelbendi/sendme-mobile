@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import WelcomeScreen from './src/screens/WelcomeScreen/WelcomeScreen';
+import MainScreen from './src/screens/MainScreen/MainScreen';
+import { MainContextProvider } from './src/store/MainContext';
+import english from './src/languages/English';
+import { LOCAL_STORAGE_NAME } from './src/store/user-details';
+import LoginScreen from './src/screens/LoginScreen/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen/RegisterScreen';
 
 export default function App() {
+  const AppStack = createStackNavigator();
+
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <MainContextProvider>
+      <NavigationContainer>
+        <AppStack.Navigator initialRouteName='main'>
+          <AppStack.Screen name="main" component={MainScreen} options={{ headerShown: false }} />
+          <AppStack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
+          <AppStack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
+        </AppStack.Navigator>
+      </NavigationContainer>
+    </MainContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
