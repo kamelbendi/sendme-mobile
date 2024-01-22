@@ -1,4 +1,9 @@
 const english = {
+    pinMessage: {
+        confirmTransaction: 'Confirm transaction with your PIN',
+        forgotPin: '',
+        confirmPin: 'Please confirm your PIN a second time',
+    },
     email: 'email',
     password: 'password',
     signIn: 'Sign In',
