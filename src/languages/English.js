@@ -1,4 +1,5 @@
 const english = {
+    sendme: 'Send Me',
     pinMessage: {
         confirmTransaction: 'Confirm transaction with your PIN',
         forgotPin: '',
@@ -7,17 +8,32 @@ const english = {
     email: 'email',
     password: 'password',
     signIn: 'Sign In',
-    signUp: 'Sign Up',
+    signUp: 'Register',
     repeatPassword: 'Repeat password',
     firstName: 'First name',
     lastName: 'Last name',
     fillEmail: 'Please provide your email',
     fillPassword: 'Please provide your password',
-    registrationText: 'fill out the form and complete the registration',
+    registrationText: 'Complete the registration',
     loginText: 'fill out the form to log in',
     registerOrLogin: 'Please Sign in or create a new account',
     welcomeText: 'Welcome to SendMe app!',
-
+    registrationSuccessful: 'Registration successful',
+    loginNow: 'Login now',
+    newHereRegister: 'New Here ? Register here',
+    accountExistsLogin: 'Already have an account ? Login here',
+    next: 'Next ->',
+    enterSurname: 'Enter surname',
+    enterName: 'Enter name',
+    enterEmail: 'Enter email',
+    enterPassword: 'Enter password',
+    confirmPassword: 'Confirm Password',
+    enterAddress: 'Enter address',
+    enterDateOfBirth: 'Enter date of birth',
+    enterZipCode: 'Enter Zip Code',
+    enterCity: 'Enter city',
+    enterPhoneNumber: 'Enter Phone Number',
+    enterCountry: 'Enter Country',
   };
 
   export default english;
