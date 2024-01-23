@@ -1,8 +1,8 @@
 const french = {
     sendme: 'Send Me',
-    pinMessage: {
+    pin: {
         confirmTransaction: 'Confirmez votre transaction avec votre code PIN',
-        forgotPin: '',
+        forgotPin: 'PIN code oublie ?',
         confirmPin: 'Confirmer votre code pour une seconde fois',
     },
     email: 'email',
@@ -25,6 +25,7 @@ const french = {
     next: 'Continuer ->',
     enterSurname: 'Prenom',
     enterName: 'Nom',
+    enterUsername: 'username',
     enterEmail: 'Enter email',
     enterPassword: 'Enter password',
     confirmPassword: 'Confirm Password',

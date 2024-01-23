@@ -2,7 +2,7 @@ const english = {
     sendme: 'Send Me',
     pinMessage: {
         confirmTransaction: 'Confirm transaction with your PIN',
-        forgotPin: '',
+        forgotPin: 'Forgot PIN code ?',
         confirmPin: 'Please confirm your PIN a second time',
     },
     email: 'email',
@@ -25,6 +25,7 @@ const english = {
     next: 'Next ->',
     enterSurname: 'Enter surname',
     enterName: 'Enter name',
+    enterUsername: 'Enter username',
     enterEmail: 'Enter email',
     enterPassword: 'Enter password',
     confirmPassword: 'Confirm Password',
@@ -34,6 +35,8 @@ const english = {
     enterCity: 'Enter city',
     enterPhoneNumber: 'Enter Phone Number',
     enterCountry: 'Enter Country',
+    transactionSuccess: 'Transaction successful.',
+    transactionFailure: 'Transaction failed.'
   };
 
   export default english;

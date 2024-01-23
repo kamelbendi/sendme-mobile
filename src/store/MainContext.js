@@ -7,23 +7,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainContext = React.createContext();
 
-export const MainContextProvider = ({ children }) => {
-  const [mainState, setMainState] = useState({
+export const initialMainState = {
     languageCode: 'en',
     language: english,
     isLoggedIn: false, // Initialize with false
     dir: 'rtl',
     userDetails: {
+      pinCode: '',
       address: '',
-      city: '',
+      zipCode: '',
       country: '',
+      city: '',
       email: '',
-      firstName: '',
-      lastName: '',
+      name: '',
+      surname: '',
+      username: '',
       phone: '',
       token: '',
     },
-  });
+}
+
+export const MainContextProvider = ({ children }) => {
+  const [mainState, setMainState] = useState(initialMainState);
 
   const fetchUserDetails = async () => {
     try {
@@ -49,7 +54,7 @@ export const MainContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserDetails();
-  }, []); // Empty dependency array to run only once on component mount
+  }, []);
 
   return (
     <MainContext.Provider value={{ mainState, setMainState }}>

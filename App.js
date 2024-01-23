@@ -20,8 +20,6 @@ export default function App() {
       <NavigationContainer>
         <AppStack.Navigator initialRouteName='main'>
           <AppStack.Screen name="main" component={MainScreen} options={{ headerShown: false }} />
-          <AppStack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
-          <AppStack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
         </AppStack.Navigator>
       </NavigationContainer>
     </MainContextProvider>

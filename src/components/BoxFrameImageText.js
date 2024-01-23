@@ -27,8 +27,7 @@ BoxFrameImageText.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 250
+    alignItems: 'center'
   },
   image: {
     width: 200,
