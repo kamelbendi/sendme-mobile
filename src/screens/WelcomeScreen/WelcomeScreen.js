@@ -18,7 +18,7 @@ const WelcomeScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <BoxFrameImageText imageName='sendme.png' text={mainState.language.welcomeText} />
+      <Text title heavy center style={{marginBottom: 100}}>{mainState.language.sendme}</Text>
       <Text heavy>{mainState.language.registerOrLogin}</Text>
       <TouchableOpacity
         style={styles.button}
