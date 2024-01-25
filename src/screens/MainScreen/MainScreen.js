@@ -16,13 +16,17 @@ import PhoneVerificationScreen from '../RegisterScreen/PhoneVerificationScreen';
 import SelfieCollectionScreen from '../RegisterScreen/SelfieCollectionScreen';
 import SetUpPINScreen from '../RegisterScreen/SetUpPINScreen';
 import ConfirmPINScreen from '../RegisterScreen/ConfirmPINScreen';
+import SuccessfulRegistration from '../RegisterScreen/SuccessfulRegistration';
+import { NavigationContainer } from '@react-navigation/native';
 
-//import { MainScreenWrapper } from './MainScreen.styles';
+import TransferScreen from '../HomeScreen/TransferScreen';
+import ScanQrScreen from '../HomeScreen/ScanQrScreen';
+import DashboardScreen from '../HomeScreen/DashboardScreen';
+import HomeScreen from '../HomeScreen/HomeScreen';
 
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
   const AppStack = createStackNavigator();
-  const Tab = createBottomTabNavigator();
   
   return (
     <AppStack.Navigator>
@@ -39,6 +43,12 @@ const MainScreen = ({ navigation }) => {
       <AppStack.Screen name="SelfieCollectionScreen" component={SelfieCollectionScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SetUpPINScreen" component={SetUpPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="ConfirmPINScreen" component={ConfirmPINScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="SuccessfulRegistration" component={SuccessfulRegistration} options={{ headerShown: false }} />
+      <AppStack.Screen name="DashboardScreen" component={DashboardScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="ScanQrScreen" component={ScanQrScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="TransferScreen" component={TransferScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+
     </AppStack.Navigator>
   )
 };
