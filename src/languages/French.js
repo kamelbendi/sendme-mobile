@@ -35,6 +35,18 @@ const french = {
     enterCity: 'Ville',
     enterPhoneNumber: 'Numero de telephone',
     enterCountry: 'Pays',
+    transactionSuccess: 'La tranasction est faite.',
+    transactionFailure: 'La transaction a echoue.',
+    phoneNumberRequest: 'Faites entrer votre Numero de telephone',
+    confirmWithSMS: 'Confirmer avec SMS',
+    sendSMSAgain: 'Pas de code recu ? Verifer le Numero de telephone ici',
+    confirmSMSCode: 'Verification du numero de telephone',
+    verify: 'Verifier',
+    pin: 'PIN',
+    setUpPin: 'Veillez creer votre code PIN',
+    fillPinCode: 'Fournissez 6 chiffres',
+    
+
   };
   
   export default french;

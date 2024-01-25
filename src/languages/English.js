@@ -36,7 +36,16 @@ const english = {
     enterPhoneNumber: 'Enter Phone Number',
     enterCountry: 'Enter Country',
     transactionSuccess: 'Transaction successful.',
-    transactionFailure: 'Transaction failed.'
+    transactionFailure: 'Transaction failed.',
+    phoneNumberRequest: 'Please provide your Phone Number',
+    confirmWithSMS: 'Confirm Number with SMS',
+    sendSMSAgain: 'Didn\'t recieve a code ? Verify Phone Number here',
+    confirmSMSCode: 'Verification code for the Phone Number',
+    verify: 'Verify',
+    pin: 'PIN',
+    setUpPin: 'Set up your PIN code',
+    fillPinCode: 'Provide 6 digits'
+
   };
 
   export default english;
