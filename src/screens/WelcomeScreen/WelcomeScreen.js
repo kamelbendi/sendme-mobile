@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Image, StyleSheet, View } from 'react-native';
-import PropTypes from 'prop-types';
+import { StyleSheet, View } from 'react-native';
 import Text from '../../components/Text';
 import BoxFrameImageText from '../../components/BoxFrameImageText';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -16,6 +15,7 @@ const WelcomeScreen = ({ navigation }) => {
   function handleRegisterPressed () {
     navigation.navigate('RegisterScreen');
   }
+
   return (
     <View style={styles.container}>
       <Text title heavy center style={{marginBottom: 100}}>{mainState.language.sendme}</Text>
@@ -32,20 +32,8 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text center bold large>{mainState.language.signUp}</Text>
       </TouchableOpacity>
-      {/* <Image
-        source={require('../../../assets/success.png')}
-        style={[styles.image]} />
-      <Text >Test contentrr</Text> */}
     </View>
   )
-};
-
-WelcomeScreen.propTypes = {
-  // bla: PropTypes.string,
-};
-
-WelcomeScreen.defaultProps = {
-  // bla: 'test',
 };
 
 const styles = StyleSheet.create({

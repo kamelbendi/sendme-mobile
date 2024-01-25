@@ -13,7 +13,7 @@ import RegisterScreen from './src/screens/RegisterScreen/RegisterScreen';
 export default function App() {
   const AppStack = createStackNavigator();
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   return (
     <MainContextProvider>

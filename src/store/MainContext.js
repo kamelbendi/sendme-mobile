@@ -13,7 +13,7 @@ export const initialMainState = {
     isLoggedIn: false, // Initialize with false
     dir: 'rtl',
     userDetails: {
-      pinCode: '',
+      pin: '',
       address: '',
       zipCode: '',
       country: '',

@@ -9,7 +9,7 @@ const SplashScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{mainState.alignItems.sendme}</Text>
+      <Text>{mainState.language.sendme}</Text>
     </View>
   );
 };
