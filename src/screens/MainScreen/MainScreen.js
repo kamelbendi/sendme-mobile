@@ -23,6 +23,7 @@ import TransferScreen from '../HomeScreen/TransferScreen';
 import ScanQrScreen from '../HomeScreen/ScanQrScreen';
 import DashboardScreen from '../HomeScreen/DashboardScreen';
 import HomeScreen from '../HomeScreen/HomeScreen';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
@@ -44,10 +45,6 @@ const MainScreen = ({ navigation }) => {
       <AppStack.Screen name="SetUpPINScreen" component={SetUpPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="ConfirmPINScreen" component={ConfirmPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SuccessfulRegistration" component={SuccessfulRegistration} options={{ headerShown: false }} />
-      <AppStack.Screen name="DashboardScreen" component={DashboardScreen} options={{ headerShown: false }} />
-      <AppStack.Screen name="ScanQrScreen" component={ScanQrScreen} options={{ headerShown: false }} />
-      <AppStack.Screen name="TransferScreen" component={TransferScreen} options={{ headerShown: false }} />
-      <AppStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
 
     </AppStack.Navigator>
   )

@@ -1,22 +1,17 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const XButton = ({ onClose }) => {
+const XButton = ({ onPress }) => {
   return (
-    <View>
-      {/* Your other content goes here */}
-
-      {/* X Button */}
-      <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>X</Text>
-      </TouchableOpacity>
-    </View>
+      <View onPress={onPress} style={styles.closeButton}>
+        <Text style={styles.closeButtonText} onPress={onPress}>X</Text>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     // Other styling for your component
   },
   closeButton: {

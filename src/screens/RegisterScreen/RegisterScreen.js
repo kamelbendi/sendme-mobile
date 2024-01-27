@@ -82,19 +82,26 @@ const RegisterScreen = (props) => {
     setLoading(true);
     setMainState({
       ...mainState,
-      name: form.name,
-      surname: form.surname,
-      username: form.username,
-      email: form.email,
-      password: form.password
+      userDetails: {
+        name: form.name,
+        surname: form.surname,
+        username: form.username,
+        email: form.email,
+        password: form.password
+      }
     });
     props.navigation.navigate('PhoneRequestScreen');
     setLoading(false);
   };
 
+  const goToWelcomeScreen = () => {
+    console.log('heee')
+    props.navigation.navigate('WelcomeScreen');
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#1e1e1e'}}>
-      <XButton onClose={() => console.log('kkkkk')}></XButton>
+      <XButton onPress={goToWelcomeScreen}></XButton>
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -106,7 +113,7 @@ const RegisterScreen = (props) => {
           <StyledText title heavy center>{mainState.language.registrationText}</StyledText>
         </View>
         <KeyboardAvoidingView enabled>
-        <View style={styles.SectionStyle}>
+          <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
               onChangeText={(surname) => setForm({...form, surname})}
@@ -178,10 +185,6 @@ const RegisterScreen = (props) => {
               ref={passwordInputRef}
               returnKeyType="next"
               secureTextEntry={true}
-              onSubmitEditing={() =>
-                ageInputRef.current &&
-                ageInputRef.current.focus()
-              }
               blurOnSubmit={false}
             />
           </View>
@@ -195,10 +198,6 @@ const RegisterScreen = (props) => {
               ref={passwordInputRef}
               returnKeyType="next"
               secureTextEntry={true}
-              onSubmitEditing={() =>
-                ageInputRef.current &&
-                ageInputRef.current.focus()
-              }
               blurOnSubmit={false}
             />
           </View>
