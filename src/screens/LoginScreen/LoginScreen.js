@@ -18,6 +18,7 @@ import apiUrl from '../../../api-urls';
 import { useMainContext } from '../../store/MainContext';
 import StyledText from '../../components/Text';
 import XButton from '../../components/XButton';
+import axios from 'axios';
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -39,55 +40,42 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
+    console.log(userEmail, userPassword)
 
-    let dataToSend = {email: userEmail, password: userPassword};
-    let formBody = [];
-    for (let key in dataToSend) {
-      let encodedKey = encodeURIComponent(key);
-      let encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
-
-    fetch(apiUrl.login, {
-      method: 'POST',
-      body: formBody,
-      headers: {
-        //Header Definition
-        'Content-Type':
-        'application/x-www-form-urlencoded;charset=UTF-8',
-      },
+    axios.post(apiUrl.login, {
+      email: userEmail,
+      password: userPassword
     })
-      .then((response) => response.json())
       .then((responseJson) => {
         //Hide Loader
         setLoading(false);
-        console.log(responseJson);
         // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          AsyncStorage.setItem('user_id', responseJson.data.email);
-          console.log(responseJson.data.email);
-          navigation.replace('DrawerNavigationRoutes');
+        if (responseJson.status === 200) {
+          setMainState({...mainState, userDetails: {...mainState.userDetails, token: responseJson.data.token}});
+          AsyncStorage.setItem('sendme_user', mainState.userDetails.username);
+          navigation.replace('Dashboard');
         } else {
-          setErrortext(responseJson.msg);
+          alert('No such user or incorrect password, please try again');
           console.log('Please check your email id or password');
         }
       })
       .catch((error) => {
         //Hide Loader
         setLoading(false);
-        console.error(error);
+        console.log(error)
+        alert('incorrect credentials, please try again');
       });
   };
 
-  const goBackToWindowScreen = () => {
-    console.log('heee')
-    navigation.goBack();
-  };
+  const goToWelcomeScreen = () => {
+    navigation.navigate('WelcomeScreen');
+  }
 
   return (
     <View style={styles.mainBody}>
-      <XButton onClose={goBackToWindowScreen}></XButton>
+      <TouchableOpacity onPress={goToWelcomeScreen} style={styles.closeButton} activeOpacity={0.5}>
+        <Text style={styles.closeButtonText}>X</Text>
+      </TouchableOpacity>
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -176,6 +164,21 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
+  },
+  closeButton: {
+    position: 'relative',
+    backgroundColor: 'transparent',
+    marginTop: 90,
+    marginLeft: 20,
+    flexDirection: 'column',
+  },
+  closeButtonText: {
+    color: 'white', // Customize the text color
+    fontSize: 28,
+    fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 0,
+    left: 10,
   },
   buttonStyle: {
     backgroundColor: '#43C6AC',
