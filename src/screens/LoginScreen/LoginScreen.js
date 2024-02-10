@@ -19,6 +19,11 @@ import { useMainContext } from '../../store/MainContext';
 import StyledText from '../../components/Text';
 import XButton from '../../components/XButton';
 import axios from 'axios';
+import { LOCAL_STORAGE_NAME } from '../../store/user-details';
+
+const saveToLocalStorage = async (details) => {
+  await AsyncStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(details));
+}
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -29,7 +34,7 @@ const LoginScreen = ({navigation}) => {
 
   const passwordInputRef = createRef();
 
-  const handleSubmitPress = () => {
+  const handleSubmitPress = async () => {
     setErrortext('');
     if (!userEmail) {
       alert(mainState.language.fillEmail);
@@ -40,31 +45,49 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    console.log(userEmail, userPassword)
 
-    axios.post(apiUrl.login, {
-      email: userEmail,
-      password: userPassword
-    })
-      .then((responseJson) => {
-        //Hide Loader
-        setLoading(false);
-        // If server response message same as Data Matched
-        if (responseJson.status === 200) {
-          setMainState({...mainState, userDetails: {...mainState.userDetails, token: responseJson.data.token}});
-          AsyncStorage.setItem('sendme_user', mainState.userDetails.username);
-          navigation.replace('Dashboard');
-        } else {
-          alert('No such user or incorrect password, please try again');
-          console.log('Please check your email id or password');
-        }
-      })
-      .catch((error) => {
-        //Hide Loader
-        setLoading(false);
-        console.log(error)
-        alert('incorrect credentials, please try again');
+    // Update the user details in the state
+    setMainState((prevMainState) => ({
+      ...prevMainState,
+      userDetails: {
+        ...prevMainState.userDetails,
+        email: userEmail,
+      },
+    }));
+
+    try {
+      const response = await axios.post(apiUrl.login, {
+        email: userEmail,
+        password: userPassword,
       });
+
+      // If server response message is successful
+      if (response.status === 200) {
+        // Update the user details in the state
+        setMainState((prevMainState) => ({
+          ...prevMainState,
+          userDetails: {
+            ...prevMainState.userDetails,
+            token: response.data.token,
+          },
+        }));
+
+        // Save the updated user details to local storage
+        await saveToLocalStorage(userEmail);
+
+        // Navigate to the Dashboard
+        navigation.replace('Dashboard');
+      } else {
+        alert('No such user or incorrect password, please try again');
+        console.log('Please check your email id or password');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Incorrect credentials, please try again');
+    } finally {
+      // Hide Loader
+      setLoading(false);
+    }
   };
 
   const goToWelcomeScreen = () => {
