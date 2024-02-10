@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const XButton = ({ onPress }) => {
+const XButton = (props) => {
+
   return (
-      <View onPress={onPress} style={styles.closeButton}>
-        <Text style={styles.closeButtonText} onPress={onPress}>X</Text>
-      </View>
+      <TouchableOpacity onPress={goToWelcomeScreen} style={styles.closeButton}>
+        <Text style={styles.closeButtonText}>X</Text>
+      </TouchableOpacity>
   );
 };
 
