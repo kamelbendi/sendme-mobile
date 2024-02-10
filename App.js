@@ -63,7 +63,7 @@ export default function App() {
       <NavigationContainer>
         <AppStack.Navigator initialRouteName='main'>
           <AppStack.Screen name="main" component={MainScreen} options={{ headerShown: false }} />
-          <AppStack.Screen name="Tab" component={TabStackScreens} options={{ headerShown: false }} />
+          <AppStack.Screen name="Dashboard" component={TabStackScreens} options={{ headerShown: false }} />
         </AppStack.Navigator>
       </NavigationContainer>
     </MainContextProvider>
