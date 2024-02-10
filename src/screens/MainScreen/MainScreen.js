@@ -19,22 +19,16 @@ import ConfirmPINScreen from '../RegisterScreen/ConfirmPINScreen';
 import SuccessfulRegistration from '../RegisterScreen/SuccessfulRegistration';
 import { NavigationContainer } from '@react-navigation/native';
 
-import TransferScreen from '../HomeScreen/TransferScreen';
-import ScanQrScreen from '../HomeScreen/ScanQrScreen';
-import DashboardScreen from '../HomeScreen/DashboardScreen';
-import HomeScreen from '../HomeScreen/HomeScreen';
-import { MaterialIcons } from '@expo/vector-icons';
-
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
   const AppStack = createStackNavigator();
-  
+
   return (
     <AppStack.Navigator>
       {
-        mainState.isLoggedIn ?
-          <AppStack.Screen name="PIN" component={LoginExistingScreen} />
-          : <AppStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+        mainState.userExists ?
+          <AppStack.Screen name="LoginExistingScreen" component={LoginExistingScreen} options={{ headerShown: false }} />
+          : <AppStack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
       }
       <AppStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
