@@ -45,7 +45,8 @@ const french = {
     pin: 'PIN',
     setUpPin: 'Veillez creer votre code PIN',
     fillPinCode: 'Fournissez 6 chiffres',
-    
+    loginWithYourPin: 'S\'enregistrer avec code PIN',
+    logout: 'Se deconnecter'
 
   };
   
