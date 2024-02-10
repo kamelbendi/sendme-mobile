@@ -23,6 +23,7 @@ import emailValidation from '../../helpers/EmailValidation';
 import fieldValidation from '../../helpers/FieldValidation';
 import usernameValidation from '../../helpers/UserNameValidation';
 import axios from 'axios';
+import passwordValidation from '../../helpers/PasswordValidation';
 
 const RegisterScreen = (props) => {
   const { mainState, setMainState } = useMainContext();
@@ -93,6 +94,17 @@ const RegisterScreen = (props) => {
       alert('Passwords do not match');
       return;
     }
+
+    if (form.isUsernameUnique) {
+      alert('username not unique, try again');
+      return;
+    }
+
+    if (form.isEmailUnique) {
+      alert('Email not unique, try again');
+      return;
+    }
+
     //Show Loader
     setLoading(true);
     setMainState({
@@ -133,7 +145,7 @@ const RegisterScreen = (props) => {
       setErrorNameText('')
     }
   }
-
+// username --------------------------------------------
   const handleUsernameInput = async (username) => {
 
     setForm({...form, username, isUserNameDirty: usernameValidation(username)});
@@ -160,8 +172,38 @@ const RegisterScreen = (props) => {
       console.log(response.data.unique)
       return response.data.unique; // This will be true if the username is unique, false otherwise
     } catch (error) {
-      console.log(response.data.unique)
       console.error('Error checking username:', error);
+      // Handle the error appropriately
+      return false; // Assuming non-unique in case of an error
+    }
+  }
+  // email ------------------------------------------------------
+  const handleEmailInput = async (email) => {
+
+    setForm({...form, email, isEmailDirty: emailValidation(email)});
+    
+    if (!emailValidation(email)) {
+      setErrorEmailText('Not a valid Email');
+      setErrorEmailUnique('');
+      return;
+    }
+    
+    setErrorEmailText('');
+    const isEmailUnique = await isEmailUniqueFunc(email);
+    setForm({...form, isEmailUnique})
+    if (!isEmailUnique) {
+      setErrorEmailUnique('Email is not unique, choose a different one');
+    } else {
+      setErrorEmailUnique('Email is unique');
+    }
+  }
+
+  const isEmailUniqueFunc = async (email) => {
+    try {
+      const response = await axios.post(apiUrl.checkEmail, { email: email });
+      return response.data.unique; // This will be true if the email is unique, false otherwise
+    } catch (error) {
+      console.error('Error checking email:', error);
       // Handle the error appropriately
       return false; // Assuming non-unique in case of an error
     }
@@ -257,7 +299,7 @@ const RegisterScreen = (props) => {
           <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(email) => setForm({...form, email})}
+              onChangeText={(email) => handleEmailInput(email)}
               underlineColorAndroid="#f000"
               autoCapitalize="none"
               placeholder={mainState.language.enterEmail}
@@ -272,9 +314,14 @@ const RegisterScreen = (props) => {
               blurOnSubmit={false}
             />
           </View>
-            {errorEmailText != '' ? (
+          {errorEmailText != '' ? (
             <Text style={styles.errorTextStyle}>
               {errorEmailText}
+            </Text>
+          ) : null}
+            {errorEmailUnique != '' ? (
+            <Text style={form.isEmailUnique ? styles.successTextStyle : styles.errorTextStyle}>
+              {errorEmailUnique}
             </Text>
           ) : null}
           <View style={styles.SectionStyle}>
