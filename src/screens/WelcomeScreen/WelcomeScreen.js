@@ -13,7 +13,7 @@ const WelcomeScreen = ({ navigation }) => {
   }
 
   function handleRegisterPressed () {
-    navigation.navigate('Tab');
+    navigation.navigate('RegisterScreen');
   }
 
   return (
