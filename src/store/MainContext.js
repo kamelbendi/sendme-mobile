@@ -4,14 +4,15 @@ import english from '../languages/English.js';
 import { LOCAL_STORAGE_NAME } from './user-details';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiUrl from '../../api-urls.js';
+import axios from 'axios';
 
 const MainContext = React.createContext();
 
 export const initialMainState = {
     languageCode: 'en',
     language: english,
-    isLoggedIn: false, // Initialize with false
-    dir: 'rtl',
+    userExists: false, // Initialize with false
     userDetails: {
       pin: '',
       //address: '',
@@ -32,19 +33,33 @@ export const MainContextProvider = ({ children }) => {
 
   const fetchUserDetails = async () => {
     try {
+      //await AsyncStorage.clear();
       const userDetailsString = await AsyncStorage.getItem(LOCAL_STORAGE_NAME);
-
+      
       // Check if userDetailsString is a valid JSON string
       if (userDetailsString) {
         const parsedUserDetails = JSON.parse(userDetailsString);
         
         // Check if parsedUserDetails is an object
-        if (parsedUserDetails && typeof parsedUserDetails === 'object') {
-          setMainState((prev) => ({
-            ...prev,
-            isLoggedIn: true,
-            userDetails: parsedUserDetails,
-          }));
+        if (parsedUserDetails && typeof parsedUserDetails === 'string') {
+          axios.post(apiUrl.user, {
+            email: parsedUserDetails
+          })
+            .then(res => {
+              setMainState((prev) => ({
+                ...prev,
+                userExists: true,
+                userDetails: {
+                  name: res.data.name,
+                  surname: res.data.surname,
+                  username: res.data.username,
+                  phone: res.data.phone
+                },
+              }));
+            })
+            .catch(err => {
+              alert(err);
+            })
         }
       }
     } catch (error) {
