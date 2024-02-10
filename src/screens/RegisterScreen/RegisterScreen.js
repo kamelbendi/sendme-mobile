@@ -169,7 +169,6 @@ const RegisterScreen = (props) => {
   const isUsernameUniqueFunc = async (username) => {
     try {
       const response = await axios.post(apiUrl.checkUsername, { username: username });
-      console.log(response.data.unique)
       return response.data.unique; // This will be true if the username is unique, false otherwise
     } catch (error) {
       console.error('Error checking username:', error);
@@ -208,6 +207,28 @@ const RegisterScreen = (props) => {
       return false; // Assuming non-unique in case of an error
     }
   }
+  // password ------------------------
+
+  const handlePasswordInput = (password) => {
+    setForm({...form, password, isPasswordDirty: passwordValidation(password)});
+    
+    if (!passwordValidation(password)) {
+      setErrorPasswordText('Not a valid Password')
+    } else {
+      setErrorPasswordText('')
+    }
+  }
+
+  const handleConfirmPasswordInput = (confirmPassword) => {
+    setForm({...form, confirmPassword});
+    
+    if (form.password !== confirmPassword) {
+      setErrorConfirmPasswordText('Passwords do not match')
+    } else {
+      setErrorConfirmPasswordText('')
+    }
+  }
+
 
   useEffect(() => {
     surnameInputRef.current && surnameInputRef.current.focus();
@@ -327,7 +348,7 @@ const RegisterScreen = (props) => {
           <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(password) => setForm({...form, password})
+              onChangeText={(password) => handlePasswordInput(password)
               }
               underlineColorAndroid="#f000"
               placeholder={mainState.language.enterPassword}
@@ -351,7 +372,7 @@ const RegisterScreen = (props) => {
           <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(confirmPassword) => setForm({...form, confirmPassword})}
+              onChangeText={(confirmPassword) => handleConfirmPasswordInput(confirmPassword)}
               underlineColorAndroid="#f000"
               placeholder={mainState.language.confirmPassword}
               placeholderTextColor="#8b9cb5"
