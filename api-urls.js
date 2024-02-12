@@ -8,7 +8,9 @@ const apiUrl = {
     checkUsername: 'http://localhost:3000/check-username',
     checkEmail: 'http://localhost:3000/check-email',
     getbalance: 'http://localhost:3000/getbalance',
+    gettransactions: 'http://localhost:3000/gettransactions',
     getcarddetails: 'http://localhost:3000/getcarddetails',
+    getaccountnumber: 'http://localhost:3000/getaccountnumber',
 
 };
 
