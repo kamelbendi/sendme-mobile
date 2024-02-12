@@ -8,6 +8,7 @@ import ScanQrScreen from './src/screens/HomeScreen/ScanQrScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from './src/screens/HomeScreen/Settings';
+import CreditCardScreen from './src/screens/HomeScreen/CreditCardScreen';
 
 export default function App() {
   const AppStack = createStackNavigator();
@@ -38,6 +39,9 @@ export default function App() {
         case "Settings":
           icon = "settings";
           break;
+        case "Credit":
+          icon = "credit-card";
+          break;
         default:
             icon = "dashboard";
       }
@@ -58,6 +62,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Send" component={TransferScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Scan" component={ScanQrScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Credit" component={CreditCardScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
       </Tab.Navigator>
     )
