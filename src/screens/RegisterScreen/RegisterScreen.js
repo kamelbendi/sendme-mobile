@@ -61,7 +61,6 @@ const RegisterScreen = (props) => {
   const confirmPasswordInputRef = createRef();
 
   const handleSubmitButton = async () => {
-    setErrorNameText('');
     if (!form.name) {
       alert('Please fill Name');
       return;
@@ -95,12 +94,12 @@ const RegisterScreen = (props) => {
       return;
     }
 
-    if (form.isUsernameUnique) {
+    if (!form.isUsernameUnique) {
       alert('username not unique, try again');
       return;
     }
 
-    if (form.isEmailUnique) {
+    if (!form.isEmailUnique) {
       alert('Email not unique, try again');
       return;
     }
@@ -148,8 +147,12 @@ const RegisterScreen = (props) => {
 // username --------------------------------------------
   const handleUsernameInput = async (username) => {
 
-    setForm({...form, username, isUserNameDirty: usernameValidation(username)});
-    
+    setForm((prevForm) => ({
+      ...prevForm,
+      username: username,
+      isUserNameDirty: usernameValidation(username),
+    }));
+
     if (!usernameValidation(username)) {
       setErrorUsernameText('Not a valid Username');
       setErrorUsernameUnique('');
@@ -158,7 +161,10 @@ const RegisterScreen = (props) => {
     
     setErrorUsernameText('');
     const isUsernameUnique = await isUsernameUniqueFunc(username);
-    setForm({...form, isUsernameUnique: isUsernameUnique})
+    setForm((prevForm) => ({
+      ...prevForm,
+      isUsernameUnique: isUsernameUnique,
+    }));
     if (!isUsernameUnique) {
       setErrorUsernameUnique('Username is not unique, choose a different one');
     } else {
@@ -178,8 +184,11 @@ const RegisterScreen = (props) => {
   }
   // email ------------------------------------------------------
   const handleEmailInput = async (email) => {
-
-    setForm({...form, email, isEmailDirty: emailValidation(email)});
+    setForm((prevForm) => ({
+      ...prevForm,
+      email: email,
+      isEmailDirty: emailValidation(email),
+    }));
     
     if (!emailValidation(email)) {
       setErrorEmailText('Not a valid Email');
@@ -189,7 +198,8 @@ const RegisterScreen = (props) => {
     
     setErrorEmailText('');
     const isEmailUnique = await isEmailUniqueFunc(email);
-    setForm({...form, isEmailUnique})
+    setForm((prevForm) => ({
+      ...prevForm, isEmailUnique}))
     if (!isEmailUnique) {
       setErrorEmailUnique('Email is not unique, choose a different one');
     } else {
@@ -209,7 +219,7 @@ const RegisterScreen = (props) => {
   }
   // password ------------------------
 
-  const handlePasswordInput = (password) => {
+  const handlePasswordInput = async (password) => {
     setForm({...form, password, isPasswordDirty: passwordValidation(password)});
     
     if (!passwordValidation(password)) {
@@ -219,9 +229,9 @@ const RegisterScreen = (props) => {
     }
   }
 
-  const handleConfirmPasswordInput = (confirmPassword) => {
+  const handleConfirmPasswordInput = async (confirmPassword) => {
     setForm({...form, confirmPassword});
-    
+
     if (form.password !== confirmPassword) {
       setErrorConfirmPasswordText('Passwords do not match')
     } else {

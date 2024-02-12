@@ -13,11 +13,12 @@ import RegisterScreen from '../RegisterScreen/RegisterScreen';
 import AddressVerificationScreen from '../RegisterScreen/AddressVerificationScreen';
 import PhoneRequestScreen from '../RegisterScreen/PhoneRequestScreen';
 import PhoneVerificationScreen from '../RegisterScreen/PhoneVerificationScreen';
-import SelfieCollectionScreen from '../RegisterScreen/SelfieCollectionScreen';
 import SetUpPINScreen from '../RegisterScreen/SetUpPINScreen';
 import ConfirmPINScreen from '../RegisterScreen/ConfirmPINScreen';
 import SuccessfulRegistration from '../RegisterScreen/SuccessfulRegistration';
 import { NavigationContainer } from '@react-navigation/native';
+import FaceIDCollectionScreen from '../RegisterScreen/FaceIDCollectionScreen';
+import IdCollectionScreen from '../RegisterScreen/IdCollectionScreen';
 
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
@@ -35,7 +36,8 @@ const MainScreen = ({ navigation }) => {
       <AppStack.Screen name="AddressVerificationScreen" component={AddressVerificationScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="PhoneRequestScreen" component={PhoneRequestScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="PhoneVerificationScreen" component={PhoneVerificationScreen} options={{ headerShown: false }} />
-      <AppStack.Screen name="SelfieCollectionScreen" component={SelfieCollectionScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="FaceIDCollectionScreen" component={FaceIDCollectionScreen} options={{ headerShown: false }} />
+      <AppStack.Screen name="IdCollectionScreen" component={IdCollectionScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SetUpPINScreen" component={SetUpPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="ConfirmPINScreen" component={ConfirmPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SuccessfulRegistration" component={SuccessfulRegistration} options={{ headerShown: false }} />

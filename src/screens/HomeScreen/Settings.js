@@ -19,21 +19,16 @@ const Settings = (props) => {
           text: 'Cancel',
           style: 'cancel',
           onPress: () => {
-            // Handle cancel action
-            console.log('User canceled');
             setLoading(false);
           },
         },
         {
           text: 'LogOut',
           onPress: async () => {
-            // Handle OK/confirm action
             console.log('User confirmed');
             await AsyncStorage.clear();
             props.navigation.navigate('main')
             setLoading(false);
-            // Call your function or perform the action here
-            // Example: performAction();
           },
         },
       ],
