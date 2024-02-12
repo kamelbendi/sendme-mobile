@@ -46,7 +46,8 @@ const english = {
     setUpPin: 'Set up your PIN code',
     fillPinCode: 'Provide 6 digits',
     loginWithYourPin: 'Please Login with your pin',
-    logout: 'Log Out'
+    logout: 'Log Out',
+    deleteAccount: 'Delete Account',
 
   };
 
