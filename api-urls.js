@@ -7,6 +7,8 @@ const apiUrl = {
     getSMS: 'http://localhost:3000/getsms',
     checkUsername: 'http://localhost:3000/check-username',
     checkEmail: 'http://localhost:3000/check-email',
+    getbalance: 'http://localhost:3000/getbalance',
+    getcarddetails: 'http://localhost:3000/getcarddetails',
 
 };
 
