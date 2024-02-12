@@ -12,33 +12,60 @@ const HomeScreen = (props) => {
   const [qrData, setQRData] = useState('');
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const [accountNumber, setAccountNumber] = useState('1234567890');
 
   const getBalance = async () => {
-    console.log(mainState.userDetails.username)
-    await axios.post(apiUrl.getbalance, {
+    const res = await axios.post(apiUrl.getbalance, {
       username: mainState.userDetails.username
     }).then(response => {
       const data = response.data;
       setBalance(data.balance);
     })
     .catch(error => {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching data :', error);
     });
   }
 
   const getTransactions = async () => {
-      
+    const res = await axios.post(apiUrl.gettransactions, {
+      username: mainState.userDetails.username
+    }).then(response => {
+      const data = response.data;
+      setTransactions(data);
+    }).catch(error => {
+      console.error('Error fetching data:', error);
+    });
   }
 
-  useEffect(async () => {
-    await getBalance();
-    await getTransactions();
+  const getAccountNumber = async () => {
+    const res = await axios.post(apiUrl.getaccountnumber, {
+      username: mainState.userDetails.username
+    }).then(response => {
+      const data = response.data;
+      setAccountNumber(data.accountnumber);
+    }).catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+  useEffect(() => {
+    getBalance();
+    getTransactions();
+    getAccountNumber();
+
   }, [])
   
   return (
     <View style={styles.container}>
       {/* User Name */}
       <Text medium heavy padding={'50px 0px 20px 20px'}>Hello, {mainState.userDetails.username}!</Text>
+      <Text medium heavy padding={'10px 0px 10px 20px'}>Account Number : {
+        [accountNumber.slice(0, 2),
+          accountNumber.slice(2, 6),
+          accountNumber.slice(6, 10),
+          accountNumber.slice(10)
+        ].join(' ')
+      }</Text>
 
       {/* Balance */}
       <View style={styles.balanceContainer}>
@@ -51,9 +78,9 @@ const HomeScreen = (props) => {
         <ScrollView style={styles.transactionList}>
           {transactions.map((transaction) => (
             <View key={transaction.id} style={styles.transactionItem}>
-              <Text>{transaction.title}</Text>
-              <Text style={{ color: transaction.amount < 0 ? 'red' : 'green' }}>
-                {transaction.amount >= 0 ? '+' : '-'}${Math.abs(transaction.amount).toFixed(2)}
+              <Text>{mainState.userDetails.username === transaction.username_receiver ? transaction.title : 'transfer to :  ' + transaction.username_receiver}</Text>
+              <Text medium heavy style={{ color: mainState.userDetails.username === transaction.username_receiver ? 'green' : 'red' }}>
+                {mainState.userDetails.username === transaction.username_receiver ? '+' : '-'}${Math.abs(transaction.amount).toFixed(2)}
               </Text>
             </View>
           ))}
