@@ -11,7 +11,7 @@ const apiUrl = {
     gettransactions: 'http://localhost:3000/gettransactions',
     getcarddetails: 'http://localhost:3000/getcarddetails',
     getaccountnumber: 'http://localhost:3000/getaccountnumber',
-
+    deleteaccount: 'http://localhost:3000/deleteaccount',
 };
 
 export default apiUrl;
