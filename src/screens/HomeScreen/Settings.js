@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import Loader from '../../components/Loader';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMainContext } from '../../store/MainContext';
-import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import apiUrl from '../../../api-urls';
-
+import axios from 'axios';
 
 const Settings = (props) => {
   const [loading, setLoading] = useState(false);
   const { mainState, setMainState } = useMainContext();
 
-  const showLogOutConfirmationAlert = () => {
+  const showLogOutConfirmationAlert = async () => {
     setLoading(true);
     Alert.alert(
       'Confirmation',
@@ -28,9 +27,14 @@ const Settings = (props) => {
         {
           text: 'LogOut',
           onPress: async () => {
-            console.log('User confirmed');
-            await AsyncStorage.clear();
-            props.navigation.navigate('main')
+            await AsyncStorage.clear()
+              .then(() => {
+                setMainState({
+                  ...mainState,
+                  userExists: false
+                })
+                props.navigation.navigate('main');
+              })
             setLoading(false);
           },
         },
@@ -55,16 +59,21 @@ const Settings = (props) => {
         {
           text: 'Delete',
           onPress: async () => {
+            await AsyncStorage.clear()
+            console.log('mainState.userDetails.email', mainState.userDetails.email)
             await axios.post(apiUrl.deleteaccount, {
               email: mainState.userDetails.email
             })
-            .then(async res => {
-              console.log(res.status)
-              props.navigation.navigate('main')
-              await AsyncStorage.clear();
+            .then(res => {
+              setMainState({
+                ...mainState,
+                userExists: false
+              })
+              props.navigation.navigate('main');
+              
             })
-            .catch(() => {
-              console.error('Error deleting account');
+            .catch((err) => {
+              console.error('Error deleting account', err);
             });
             setLoading(false);
           },
