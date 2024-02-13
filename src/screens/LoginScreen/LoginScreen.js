@@ -68,7 +68,13 @@ const LoginScreen = ({navigation}) => {
           ...prevMainState,
           userDetails: {
             ...prevMainState.userDetails,
+            email: response.data.user.email,
             token: response.data.token,
+            name: response.data.user.name,
+            surname: response.data.user.surname,
+            username: response.data.user.username,
+            phone: response.data.user.phone,
+
           },
         }));
 

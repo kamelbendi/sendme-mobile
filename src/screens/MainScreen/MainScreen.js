@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import WelcomeScreen from '../WelcomeScreen/WelcomeScreen';
 import LoginExistingScreen from '../LoginExistingScreen/LoginExistingScreen';
@@ -19,10 +18,53 @@ import SuccessfulRegistration from '../RegisterScreen/SuccessfulRegistration';
 import { NavigationContainer } from '@react-navigation/native';
 import FaceIDCollectionScreen from '../RegisterScreen/FaceIDCollectionScreen';
 import IdCollectionScreen from '../RegisterScreen/IdCollectionScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LOCAL_STORAGE_NAME } from '../../store/user-details';
+import axios from 'axios';
+import apiUrl from '../../../api-urls';
 
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
   const AppStack = createStackNavigator();
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const userDetailsString = await AsyncStorage.getItem(LOCAL_STORAGE_NAME);
+        console.log('userDetailsString:', userDetailsString);
+        // Check if userDetailsString is a valid JSON string
+        if (userDetailsString) {
+          const parsedUserDetails = JSON.parse(userDetailsString);
+          
+          // Check if parsedUserDetails is an object
+          if (parsedUserDetails && typeof parsedUserDetails === 'string') {
+            await axios.post(apiUrl.user, {
+              email: parsedUserDetails
+            })
+              .then(res => {
+                setMainState((prev) => ({
+                  ...prev,
+                  userExists: true,
+                  userDetails: {
+                    name: res.data.name,
+                    surname: res.data.surname,
+                    username: res.data.username,
+                    phone: res.data.phone
+                  },
+                }));
+                console.log('here??????' + res.data);
+              })
+              .catch(err => {
+                alert(err);
+              })
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+    fetchUserDetails();
+  }, []);
 
   return (
     <AppStack.Navigator>
