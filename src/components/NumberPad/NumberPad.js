@@ -4,7 +4,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Text from '../Text';
 
-const NumberPad = ({ onAdd, onDelete, onConfirm }) => {
+const NumberPad = ({ onAdd, onDelete, onComma }) => {
   const renderNumberButton = (number) => (
     <TouchableOpacity
       key={number}
@@ -34,6 +34,10 @@ const NumberPad = ({ onAdd, onDelete, onConfirm }) => {
       </View>
       <View style={styles.row}>
         <View style={styles.confirmButton}>
+          {onComma && <TouchableOpacity style={styles.deleteButton} onPress={onComma}>
+            <Text title heavy style={{color: '#333'}}> ,</Text>
+          </TouchableOpacity>
+          }
         </View>
         {renderNumberButton(0)}
         <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
