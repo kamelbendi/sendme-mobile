@@ -16,6 +16,9 @@ export const initialMainState = {
       username: '',
       phone: '',
       token: '',
+      balance: 0,
+      transactions: [],
+      accountNumber: '123456789',
       idUri: null
     },
 }
