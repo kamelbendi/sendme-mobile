@@ -7,50 +7,81 @@ import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 import apiUrl from '../../../api-urls';
 
+export const getBalance = async (mainState, setMainState) => {
+  try {
+      if (mainState && setMainState) {
+      const response = await axios.post(apiUrl.getbalance, {
+        username: mainState.userDetails.username
+      });
+
+      const data = response.data;
+  
+      setMainState(prevState => ({
+        ...prevState,
+        userDetails: {
+          ...prevState.userDetails,
+          balance: data.balance
+        }
+      }));
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+
+export const getTransactions = async (mainState, setMainState) => {
+  try {
+    if (mainState && setMainState) {
+      const response = await axios.post(apiUrl.gettransactions, {
+        username: mainState.userDetails.username
+      });
+
+      const data = response.data;
+      
+      setMainState(prevState => ({
+        ...prevState,
+        userDetails: {
+          ...prevState.userDetails,
+          transactions: data
+        }
+      }));
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+
 const HomeScreen = (props) => {
   const { mainState, setMainState } = useMainContext();
   const [qrData, setQRData] = useState('');
-  const [balance, setBalance] = useState(0);
-  const [transactions, setTransactions] = useState([]);
-  const [accountNumber, setAccountNumber] = useState('1234567890');
 
-  const getBalance = async () => {
-    const res = await axios.post(apiUrl.getbalance, {
-      username: mainState.userDetails.username
-    }).then(response => {
-      const data = response.data;
-      setBalance(data.balance);
-    })
-    .catch(error => {
-      console.error('Error fetching data :', error);
-    });
-  }
-
-  const getTransactions = async () => {
-    const res = await axios.post(apiUrl.gettransactions, {
-      username: mainState.userDetails.username
-    }).then(response => {
-      const data = response.data;
-      setTransactions(data);
-    }).catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }
 
   const getAccountNumber = async () => {
-    const res = await axios.post(apiUrl.getaccountnumber, {
-      username: mainState.userDetails.username
-    }).then(response => {
+    try {
+      const response = await axios.post(apiUrl.getaccountnumber, {
+        username: mainState.userDetails.username
+      });
+  
       const data = response.data;
-      setAccountNumber(data.accountnumber);
-    }).catch(error => {
+  
+      setMainState(prevState => ({
+        ...prevState,
+        userDetails: {
+          ...prevState.userDetails,
+          accountNumber: data.accountnumber
+        }
+      }));
+    } catch (error) {
       console.error('Error fetching data:', error);
-    });
+      // Handle the error, e.g., show an error message to the user
+    }
   }
 
   useEffect(() => {
-    getBalance();
-    getTransactions();
+    getBalance(mainState, setMainState);
+    getTransactions(mainState, setMainState);
     getAccountNumber();
 
   }, [])
@@ -60,35 +91,46 @@ const HomeScreen = (props) => {
       {/* User Name */}
       <Text medium heavy padding={'50px 0px 20px 20px'}>Hello, {mainState.userDetails.username}!</Text>
       <Text medium heavy padding={'10px 0px 10px 20px'}>Account Number : {
-        [accountNumber.slice(0, 2),
-          accountNumber.slice(2, 6),
-          accountNumber.slice(6, 10),
-          accountNumber.slice(10)
+        mainState.userDetails.accountNumber ?
+        [
+          mainState.userDetails.accountNumber.slice(0, 2),
+          mainState.userDetails.accountNumber.slice(2, 6),
+          mainState.userDetails.accountNumber.slice(6, 10),
+          mainState.userDetails.accountNumber.slice(10)
         ].join(' ')
+        : <Text>Loading...</Text>
       }</Text>
 
       {/* Balance */}
       <View style={styles.balanceContainer}>
-        <Text style={styles.balanceAmount} center>${parseFloat(balance).toFixed(2)}</Text>
+        <Text style={styles.balanceAmount} center>${parseFloat(mainState.userDetails.balance).toFixed(2)}</Text>
       </View>
 
       {/* Transaction History */}
       <View style={styles.transactionHistory}>
         <Text style={styles.transactionHeading}>Transaction History:</Text>
         <ScrollView style={styles.transactionList}>
-          {transactions.map((transaction) => (
+        {mainState.userDetails.transactions ?
+          mainState.userDetails.transactions.map((transaction) => (
             <View key={transaction.id} style={styles.transactionItem}>
-              <Text>{mainState.userDetails.username === transaction.username_receiver ? transaction.title : 'transfer to :  ' + transaction.username_receiver}</Text>
-              <Text medium heavy style={{ color: mainState.userDetails.username === transaction.username_receiver ? 'green' : 'red' }}>
+              <Text>
+                {mainState.userDetails.username === transaction.username_receiver ?
+                  transaction.title :
+                  'transfer to :  ' + transaction.username_receiver
+                }
+              </Text>
+              <Text medium heavy style={{
+                color: mainState.userDetails.username === transaction.username_receiver ? 'green' : 'red'
+              }}>
                 {mainState.userDetails.username === transaction.username_receiver ? '+' : '-'}${Math.abs(transaction.amount).toFixed(2)}
               </Text>
             </View>
-          ))}
+          )) : <Text>Loading...</Text>}
         </ScrollView>
       </View>
     </View>
   );
-  
+
 }
 
 const styles = StyleSheet.create({
