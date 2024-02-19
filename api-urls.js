@@ -6,12 +6,14 @@ const apiUrl = {
     verifySMS: 'http://localhost:3000/verifysms',
     getSMS: 'http://localhost:3000/getsms',
     checkUsername: 'http://localhost:3000/check-username',
+    usernameexists: 'http://localhost:3000/username-exists',
     checkEmail: 'http://localhost:3000/check-email',
     getbalance: 'http://localhost:3000/getbalance',
     gettransactions: 'http://localhost:3000/gettransactions',
     getcarddetails: 'http://localhost:3000/getcarddetails',
     getaccountnumber: 'http://localhost:3000/getaccountnumber',
     deleteaccount: 'http://localhost:3000/deleteaccount',
+    transfer: 'http://localhost:3000/transfer',
 };
 
 export default apiUrl;
