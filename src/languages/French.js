@@ -48,6 +48,9 @@ const french = {
     loginWithYourPin: 'S\'enregistrer avec code PIN',
     logout: 'Se deconnecter',
     deleteAccount: 'Supprimer le compte',
+    transfer: 'Transferer',
+    continue: 'Continuer',
+    transactionSuccess: 'Transfer reussi'
 
   };
   

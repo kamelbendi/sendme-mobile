@@ -10,6 +10,7 @@ import axios from 'axios';
 import apiUrl from '../../../api-urls';
 import { getBalance, getTransactions } from './HomeScreen';
 
+
 const TransferScreen = (props) => {
   const [recipient, setRecipient] = useState('');
   const [selectedAmount, setSelectedAmount] = useState('0');
@@ -76,7 +77,11 @@ const TransferScreen = (props) => {
     })
       .then(res => {
         setLoading(false);
-        alert('Transfer successful');
+        props.navigation.navigate('SuccessfulTransfer');
+        setErrorUsername('');
+        setRecipient('');
+        setUsernameExists(false);
+        setSelectedAmount('0');
         getBalance(mainState, setMainState);
         getTransactions(mainState, setMainState);
         // Notification.localNotification({
@@ -111,6 +116,7 @@ const TransferScreen = (props) => {
       <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
+              value={recipient}
               onChangeText={(recipient) => handleRecipient(recipient)}
               ref={recipientInputRef}
               underlineColorAndroid="#f000"

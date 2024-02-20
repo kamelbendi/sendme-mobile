@@ -59,6 +59,7 @@ const PinComponent = (props) => {
       <AccessPin>{renderPins()}</AccessPin>
       <Text center heavy medium margin="32px 0 0 0">{props.underInputText}</Text>
       <NumberPad
+        marginTop={320}
         onAdd={handleNumberPress}
         onDelete={handleDeletePress}
       />

@@ -48,6 +48,9 @@ const english = {
     loginWithYourPin: 'Please Login with your pin',
     logout: 'Log Out',
     deleteAccount: 'Delete Account',
+    transfer: 'Transfer',
+    continue: 'Continue',
+    transactionSuccess: 'Transfer successful',
 
   };
 
