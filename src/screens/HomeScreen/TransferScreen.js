@@ -4,11 +4,11 @@ import NumberPad from '../../components/NumberPad/NumberPad';
 import Text from '../../components/Text';
 import { TextInput } from 'react-native-gesture-handler';
 import { useMainContext } from '../../store/MainContext';
-//import { Notification } from 'react-native-notifications';
 import Loader from '../../components/Loader';
 import axios from 'axios';
 import apiUrl from '../../../api-urls';
 import { getBalance, getTransactions } from './HomeScreen';
+import { Icon } from 'react-native-elements';
 
 
 const TransferScreen = (props) => {
@@ -84,13 +84,6 @@ const TransferScreen = (props) => {
         setSelectedAmount('0');
         getBalance(mainState, setMainState);
         getTransactions(mainState, setMainState);
-        // Notification.localNotification({
-        //   title: 'Transfer',
-        //   body: `You have transferred ${selectedAmount} PLN to ${recipient}`,
-        //   sound: 'default',
-        //   silent: false,
-        //   channelId: 'default-channel-id',
-        // });
       })
       .catch((err) => {
         setLoading(false);
@@ -98,16 +91,18 @@ const TransferScreen = (props) => {
       })
   }
 
+  onQRCodeScan = (data) => {
+    setRecipient(data);
+    handleRecipient(data);
+    props.navigation.navigate('Dashboard');
+  }
+
+  handleScanQRCode = () => {
+    props.navigation.navigate('QRCodeScannerScreen', { onQRCodeScan });
+  }
+
   useEffect(() => {
     recipientInputRef.current && recipientInputRef.current.focus();
-    // Notification.createChannel({
-    //   channelId: 'default-channel-id',
-    //   channelName: 'Default channel',
-    //   channelDescription: 'A default channel',
-    //   soundName: 'default',
-    //   importance: 4,
-    //   vibrate: true,
-    // });
   } ,[]);
 
   return (
@@ -128,9 +123,11 @@ const TransferScreen = (props) => {
               }
               blurOnSubmit={false}
             />
+            <TouchableOpacity style={styles.cameraButton} onPress={handleScanQRCode}>
+              <Icon name="camera" type="font-awesome" size={20} color="white" />
+            </TouchableOpacity>
       </View>
       <View style={styles.balanceContainer}>
-        
             <Text style={usernameExists ? styles.successTextStyle : styles.errorTextStyle}>
               {errorUsername}
             </Text>
@@ -158,6 +155,16 @@ const TransferScreen = (props) => {
 export default TransferScreen;
 
 const styles = StyleSheet.create({
+  cameraButton: {
+    width: 55,
+    height: 55,
+    borderRadius: '50%',
+    backgroundColor: '#1e1e1e', // Adjust the color as needed
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 1,
+  },
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -189,6 +196,7 @@ const styles = StyleSheet.create({
     borderColor: '#dadae8',
     border: 10,
     flexDirection: 'row',
+    alignItems: 'center',
     height: 60,
     marginTop: 100,
     marginLeft: 35,
@@ -204,6 +212,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: '#dadae8',
     marginTop: 10,
+    height: 40,
+    marginRight: 10,
   },
   container: {
     backgroundColor: '#1e1e1e',
