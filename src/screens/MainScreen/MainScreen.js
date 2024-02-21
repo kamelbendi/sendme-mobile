@@ -31,7 +31,6 @@ const MainScreen = ({ navigation }) => {
     const fetchUserDetails = async () => {
       try {
         const userDetailsString = await AsyncStorage.getItem(LOCAL_STORAGE_NAME);
-        console.log('userDetailsString:', userDetailsString);
         // Check if userDetailsString is a valid JSON string
         if (userDetailsString) {
           const parsedUserDetails = JSON.parse(userDetailsString);
@@ -52,7 +51,6 @@ const MainScreen = ({ navigation }) => {
                     phone: res.data.phone
                   },
                 }));
-                console.log('here??????' + res.data);
               })
               .catch(err => {
                 alert(err);

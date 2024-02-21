@@ -16,8 +16,6 @@ const QrScreen = (props) => {
           backgroundColor="#1e1e1e"
         />
       </View>
-    
-
   )
 };
 
