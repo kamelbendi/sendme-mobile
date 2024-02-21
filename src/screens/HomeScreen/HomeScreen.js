@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import Text from '../../components/Text';
 import { useMainContext } from '../../store/MainContext';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { ScrollView } from 'react-native-gesture-handler';
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 import apiUrl from '../../../api-urls';
 
@@ -55,7 +55,7 @@ export const getTransactions = async (mainState, setMainState) => {
 
 const HomeScreen = (props) => {
   const { mainState, setMainState } = useMainContext();
-  const [qrData, setQRData] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
 
   const getAccountNumber = async () => {
@@ -79,14 +79,29 @@ const HomeScreen = (props) => {
     }
   }
 
-  useEffect(() => {
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+  };
+
+  fetchData = async () => {
     getBalance(mainState, setMainState);
     getTransactions(mainState, setMainState);
-    getAccountNumber();
+    setRefreshing(false);
+  }
+
+  useEffect(() => {
+    fetchData();
 
   }, [])
   
   return (
+    <ScrollView
+      style={{ flex: 1 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
     <View style={styles.container}>
       {/* User Name */}
       <Text medium heavy padding={'50px 0px 20px 20px'}>Hello, {mainState.userDetails.username}!</Text>
@@ -116,7 +131,7 @@ const HomeScreen = (props) => {
               <Text>
                 {mainState.userDetails.username === transaction.username_receiver ?
                   transaction.title :
-                  'transfer to :  ' + transaction.username_receiver
+                  transaction.username_receiver === 'ATM' ? -transaction.amount + " PLN withdrwan from ATM" : transaction.username_sender === 'ATM' ? transaction.amount + " PLN deposit from ATM" : 'Transfer to :  ' + transaction.username_receiver
                 }
               </Text>
               <Text medium heavy style={{
@@ -129,6 +144,7 @@ const HomeScreen = (props) => {
         </ScrollView>
       </View>
     </View>
+    </ScrollView>
   );
 
 }
