@@ -4,11 +4,13 @@ import MainScreen from './src/screens/MainScreen/MainScreen';
 import { MainContextProvider } from './src/store/MainContext';
 import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import TransferScreen from './src/screens/HomeScreen/TransferScreen';
-import ScanQrScreen from './src/screens/HomeScreen/ScanQrScreen';
+import QrScreen from './src/screens/HomeScreen/QrScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from './src/screens/HomeScreen/Settings';
 import CreditCardScreen from './src/screens/HomeScreen/CreditCardScreen';
+import SuccessfulTransfer from './src/screens/RegisterScreen/SuccessfulTransfer';
+import QRCodeScannerScreen from './src/components/QRCodeScanner';
 
 export default function App() {
   const AppStack = createStackNavigator();
@@ -33,8 +35,8 @@ export default function App() {
         case "Send":
           icon = "send";
           break;
-        case "Scan":
-          icon = "qr-code-scanner";
+        case "QR code":
+          icon = "qr-code";
           break;
         case "Settings":
           icon = "settings";
@@ -55,13 +57,12 @@ export default function App() {
     }
   })
   
-
   const TabStackScreens = () => {
     return (
       <Tab.Navigator screenOptions={screenOptions} >
         <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Send" component={TransferScreen} options={{ headerShown: false }} />
-        <Tab.Screen name="Scan" component={ScanQrScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="QR code" component={QrScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Credit" component={CreditCardScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
       </Tab.Navigator>
@@ -74,6 +75,8 @@ export default function App() {
         <AppStack.Navigator initialRouteName='main'>
           <AppStack.Screen name="main" component={MainScreen} options={{ headerShown: false }} />
           <AppStack.Screen name="Dashboard" component={TabStackScreens} options={{ headerShown: false }} />
+          <AppStack.Screen name="SuccessfulTransfer" component={SuccessfulTransfer} options={{ headerShown: false }} />
+          <AppStack.Screen name="QRCodeScannerScreen" component={QRCodeScannerScreen} options={{ headerShown: false }} />
         </AppStack.Navigator>
       </NavigationContainer>
     </MainContextProvider>
