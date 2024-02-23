@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import ImagePicker from 'react-native-image-picker';
+
 import { useMainContext } from '../../store/MainContext';
+import Text from '../../components/Text';
+import * as ImagePicker from 'expo-image-picker';
 
 const IdCollectionScreen = (props) => {
   const { mainState, setMainState } = useMainContext();
@@ -17,22 +19,30 @@ const IdCollectionScreen = (props) => {
     }
   };
 
-  const pickImageFromGallery = () => {
-    const options = {
-      title: 'Select ID Document Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.uri) {
-        setMainState({...mainState, userDetails: {...mainState.userDetails, idUri:response.uri}});
-        props.navigation.navigate('SetUpPINScreen');
-      }
+  const pickImageFromGallery = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    if (result && !result.canceled) {
+      setMainState({...mainState, userDetails: {...mainState.userDetails, idUri:result.uri}});
+      props.navigation.navigate('SetUpPINScreen');
+    }
   };
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -50,10 +60,10 @@ const IdCollectionScreen = (props) => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={takePicture}>
-          <Text style={styles.buttonText}>Take Photo</Text>
+          <Text heavy large style={styles.buttonText}>Take Photo</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={pickImageFromGallery}>
-          <Text style={styles.buttonText}>Pick from Gallery</Text>
+          <Text heavy large style={styles.buttonText}>Pick from Gallery</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -62,6 +72,7 @@ const IdCollectionScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#1e1e1e',
     flex: 1,
     justifyContent: 'center',
   },
@@ -87,6 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#43C6AC',
     padding: 15,
     borderRadius: 10,
+    marginBottom: 100,
   },
   buttonText: {
     color: 'white',
