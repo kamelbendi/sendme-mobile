@@ -1,32 +1,34 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 
-const XButton = (props) => {
+const XButton = ({ navigation }) => {
+  const goToWelcomeScreen = () => {
+    navigation.navigate('WelcomeScreen');
+  };
 
   return (
-      <TouchableOpacity onPress={goToWelcomeScreen} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>X</Text>
-      </TouchableOpacity>
+    <TouchableOpacity onPress={goToWelcomeScreen} style={styles.closeButton} activeOpacity={0.5}>
+      <Text style={styles.closeButtonText}>X</Text>
+    </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    //flex: 1,
-    // Other styling for your component
-  },
+const styles = {
   closeButton: {
-    position: 'absolute',
-    top: 30,
-    right: 10,
-    padding: 10,
-    backgroundColor: 'transparent', // Make the button background transparent
+    position: 'relative',
+    backgroundColor: 'transparent',
+    marginTop: 90,
+    marginLeft: 20,
+    flexDirection: 'column',
   },
   closeButtonText: {
     color: 'white', // Customize the text color
     fontSize: 28,
     fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 0,
+    left: 10,
   },
-});
+};
 
 export default XButton;
