@@ -46,8 +46,8 @@ const SideBarScreen = (props) => {
                 },
                 {
                   text: 'Confirm',
-                  onPress: () => {
-                    AsyncStorage.clear();
+                  onPress: async () => {
+                    await AsyncStorage.clear();
                     props.navigation.replace('Auth');
                   },
                 },

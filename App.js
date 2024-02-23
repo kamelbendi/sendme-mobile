@@ -32,7 +32,7 @@ export default function App() {
       const size = 24;
 
       switch (route.name) {
-        case "Send":
+        case "Transfer":
           icon = "send";
           break;
         case "QR code":
@@ -41,7 +41,7 @@ export default function App() {
         case "Settings":
           icon = "settings";
           break;
-        case "Credit":
+        case "Credit card":
           icon = "credit-card";
           break;
         default:
@@ -61,9 +61,9 @@ export default function App() {
     return (
       <Tab.Navigator screenOptions={screenOptions} >
         <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Tab.Screen name="Send" component={TransferScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Transfer" component={TransferScreen} options={{ headerShown: false }} />
         <Tab.Screen name="QR code" component={QrScreen} options={{ headerShown: false }} />
-        <Tab.Screen name="Credit" component={CreditCardScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Credit card" component={CreditCardScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
       </Tab.Navigator>
     )
