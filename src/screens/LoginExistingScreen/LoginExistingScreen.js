@@ -19,13 +19,11 @@ const LoginExistingScreen = (props) => {
 
     emailToUse = JSON.parse(email);
     if (emailToUse && typeof emailToUse === 'string') {
-      console.log(emailToUse, pin)
       await axios.post(apiUrl.pinlogin, {
         email: emailToUse,
         pin: pin
       })
       .then(res => {
-        console.log('API Response:', res.data);
         setLoading(false);
         setMainState({...mainState, userDetails: {...mainState.userDetails, token: res.data.token}});
         props.navigation.replace('Dashboard');
