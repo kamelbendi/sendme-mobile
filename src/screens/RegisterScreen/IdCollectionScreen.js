@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import { useMainContext } from '../../store/MainContext';
 import Text from '../../components/Text';
 import * as ImagePicker from 'expo-image-picker';
+import XButton from '../../components/XButton';
 
 const IdCollectionScreen = (props) => {
   const { mainState, setMainState } = useMainContext();
@@ -53,6 +54,7 @@ const IdCollectionScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      <XButton navigation={props.navigation}/>
       <View style={styles.cameraContainer}>
         <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
           <View
