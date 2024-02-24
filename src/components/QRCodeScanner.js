@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 import { CameraView, Camera } from "expo-camera/next";
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Text from './Text';
 
@@ -20,8 +21,10 @@ const QRCodeScannerScreen = (props) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    console.log(`Scanned type: ${type}, data: ${data}`);
     setScanned(true);
     onQRCodeScan(data);
+    props.navigation.navigate('Dashboard');
   };
 
   if (hasPermission === null) {
@@ -33,18 +36,15 @@ const QRCodeScannerScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <CameraView
-        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-        barcodeScannerSettings={{
-          barCodeTypes: ["qr", "pdf417"],
-        }}
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
+      {/* {scanned && (
         <TouchableOpacity onPress={() => setScanned(false)} >
           <Text>Tap to Scan Again</Text>
         </TouchableOpacity>
-      )}
+      )} */}
         <TouchableOpacity style={styles.closeButton} onPress={() => props.navigation.navigate('Dashboard')}>
           <Text style={styles.closeButtonText} >X</Text>
         </TouchableOpacity>
