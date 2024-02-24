@@ -22,7 +22,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOCAL_STORAGE_NAME } from '../../store/user-details';
 import axios from 'axios';
 import apiUrl from '../../../api-urls';
-import ConfirmTransactionPINScreen from '../RegisterScreen/ConfirmTransactionPINScreen';
 
 const MainScreen = ({ navigation }) => {
   const { mainState, setMainState } = useMainContext();
@@ -81,7 +80,6 @@ const MainScreen = ({ navigation }) => {
       <AppStack.Screen name="IdCollectionScreen" component={IdCollectionScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SetUpPINScreen" component={SetUpPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="ConfirmPINScreen" component={ConfirmPINScreen} options={{ headerShown: false }} />
-      <AppStack.Screen name="ConfirmTransactionPinScreen" component={ConfirmTransactionPINScreen} options={{ headerShown: false }} />
       <AppStack.Screen name="SuccessfulRegistration" component={SuccessfulRegistration} options={{ headerShown: false }} />
 
     </AppStack.Navigator>

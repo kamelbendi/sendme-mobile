@@ -7,7 +7,6 @@ import { useMainContext } from '../../store/MainContext';
 import Loader from '../../components/Loader';
 import axios from 'axios';
 import apiUrl from '../../../api-urls';
-import { getBalance, getTransactions } from './HomeScreen';
 import { Icon } from 'react-native-elements';
 
 
@@ -41,16 +40,16 @@ const TransferScreen = (props) => {
   const handleRecipient = async (recipient) => {
     setRecipient(recipient);
 
-    await axios.post(apiUrl.usernameexists, {
+    await axios.post(apiUrl.checkUsername, {
       username: recipient
     })
       .then((res) => {
-        if (res.data.exists) {
+        if (!res.data.unique) {
           setErrorUsername('Username exists');
         } else {
           setErrorUsername('Username does not exist');
         }
-        setUsernameExists(res.data.exists);
+        setUsernameExists(!res.data.unique);
       })
       .catch(err => {
         setUsernameExists(false);
@@ -68,33 +67,39 @@ const TransferScreen = (props) => {
       alert('Enter a valid username');
       return;
     }
-    setLoading(true);
     props.navigation.navigate('ConfirmTransactionPinScreen', {
-      sendTransaction
+      sendTransactionData: {
+        username_sender: mainState.userDetails.username,
+        username_receiver: recipient,
+        amount: parseFloat(selectedAmount),
+      },
     });
-
+    setErrorUsername('');
+    setRecipient('');
+    setUsernameExists(false);
+    setSelectedAmount('0');
   }
   
-  const sendTransaction = async () => {
-    await axios.post(apiUrl.transfer, {
-      username_sender: mainState.userDetails.username,
-      username_receiver: recipient,
-      amount: parseFloat(selectedAmount)
-    })
-      .then(res => {
-        setLoading(false);
-        props.navigation.navigate('SuccessfulTransfer');
-        setErrorUsername('');
-        setRecipient('');
-        setUsernameExists(false);
-        setSelectedAmount('0');
-        getBalance(mainState, setMainState);
-        getTransactions(mainState, setMainState);
+  const sendTransaction = () => {
+    try {
+      axios.post(apiUrl.transfer, {
+        username_sender: mainState.userDetails.username,
+        username_receiver: recipient,
+        amount: parseFloat(selectedAmount)
       })
-      .catch((err) => {
-        setLoading(false);
-        alert('Error transferring' + err);
-      })
+        .then(res => {
+          setLoading(false);
+          
+          getBalance(mainState, setMainState);
+          getTransactions(mainState, setMainState);
+        })
+        .catch((err) => {
+          setLoading(false);
+          alert('Error transferring' + err);
+        })
+    } catch (error) {
+      console.error('Error transferring :', error);
+    }
   }
 
   onQRCodeScan = (data) => {
