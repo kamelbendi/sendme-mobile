@@ -11,6 +11,7 @@ import Settings from './src/screens/HomeScreen/Settings';
 import CreditCardScreen from './src/screens/HomeScreen/CreditCardScreen';
 import SuccessfulTransfer from './src/screens/RegisterScreen/SuccessfulTransfer';
 import QRCodeScannerScreen from './src/components/QRCodeScanner';
+import ConfirmTransactionPINScreen from './src/screens/RegisterScreen/ConfirmTransactionPINScreen';
 
 export default function App() {
   const AppStack = createStackNavigator();
@@ -77,6 +78,7 @@ export default function App() {
           <AppStack.Screen name="Dashboard" component={TabStackScreens} options={{ headerShown: false }} />
           <AppStack.Screen name="SuccessfulTransfer" component={SuccessfulTransfer} options={{ headerShown: false }} />
           <AppStack.Screen name="QRCodeScannerScreen" component={QRCodeScannerScreen} options={{ headerShown: false }} />
+          <AppStack.Screen name="ConfirmTransactionPinScreen" component={ConfirmTransactionPINScreen} options={{ headerShown: false }} />
         </AppStack.Navigator>
       </NavigationContainer>
     </MainContextProvider>

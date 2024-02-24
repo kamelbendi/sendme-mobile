@@ -4,6 +4,7 @@ import { useMainContext } from '../../store/MainContext';
 
 import apiUrl from '../../../api-urls';
 import Loader from '../../components/Loader';
+import axios from 'axios';
 
 const ConfirmPINScreen = (props) => {
     const { mainState, setMainState } = useMainContext();
@@ -28,9 +29,9 @@ const ConfirmPINScreen = (props) => {
                     setLoading(false);
                     props.navigation.navigate('RegistrationSuccessful');
                 })
-                .catch(() => {
+                .catch((err) => {
                     setLoading(false);
-                    alert('unable to register');
+                    alert('unable to register:' + err);
                 });
 
         }

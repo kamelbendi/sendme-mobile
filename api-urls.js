@@ -6,7 +6,6 @@ const apiUrl = {
     verifySMS: 'https://sendme-node.onrender.com/verifysms',
     getSMS: 'https://sendme-node.onrender.com/getsms',
     checkUsername: 'https://sendme-node.onrender.com/check-username',
-    usernameexists: 'https://sendme-node.onrender.com/username-exists',
     checkEmail: 'https://sendme-node.onrender.com/check-email',
     getbalance: 'https://sendme-node.onrender.com/getbalance',
     gettransactions: 'https://sendme-node.onrender.com/gettransactions',
