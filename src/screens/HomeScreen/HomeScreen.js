@@ -96,13 +96,13 @@ const HomeScreen = (props) => {
   }, [])
   
   return (
+    <View style={styles.container}>
     <ScrollView
-      style={{ flex: 1 }}
+      style={{ flex: 1}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-    <View style={styles.container}>
       {/* User Name */}
       <Text medium heavy padding={'50px 0px 20px 20px'}>Hello, {mainState.userDetails.username}!</Text>
       <Text medium heavy padding={'10px 0px 10px 20px'}>Account Number : {
@@ -143,8 +143,8 @@ const HomeScreen = (props) => {
           )) : <Text>Loading...</Text>}
         </ScrollView>
       </View>
-    </View>
     </ScrollView>
+    </View>
   );
 
 }
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1e1e1e',
     flex: 1,
+    height: '100%',
     padding: 16,
   },
   userName: {
