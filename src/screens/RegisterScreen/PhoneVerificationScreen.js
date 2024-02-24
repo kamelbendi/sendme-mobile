@@ -7,6 +7,7 @@ import apiUrl from '../../../api-urls';
 import Loader from '../../components/Loader';
 import axios from 'axios';
 import { phoneNumberValidation } from '../../helpers/PhoneNumberValidation';
+import XButton from '../../components/XButton';
 //import * as styles from './LoginExistingScreen.styles';
 //import { LoginExistingScreenWrapper } from './LoginExistingScreen.styles';
 
@@ -20,20 +21,20 @@ const PhoneVerificationScreen = (props) => {
         setInputCode(truncatedText);
     }
 
-    function verifyCode () {
+    async function verifyCode () {
         if (!inputCode || !phoneNumberValidation(inputCode, 6)) {
             alert('Enter a valid phone number');
             return;
         }
 
         setLoading(true);
-        axios.post(apiUrl.verifySMS, {
+        await axios.post(apiUrl.verifySMS, {
             phone: mainState.userDetails.phone,
             code: inputCode,
         })
             .then(res => {
                 setLoading(false);
-                props.navigation.navigate('SetUpPINScreen'); // should be selfie
+                props.navigation.navigate('IdCollectionScreen');
             })
             .catch(() => {
                 setLoading(false);
@@ -44,6 +45,7 @@ const PhoneVerificationScreen = (props) => {
     return (
         <View style={styles.container}>
             <Loader loading={loading}></Loader>
+            <XButton navigation={props.navigation} screen={'RegisterScreen'}/>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{

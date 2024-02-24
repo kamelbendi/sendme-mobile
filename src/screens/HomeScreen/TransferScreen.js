@@ -69,7 +69,13 @@ const TransferScreen = (props) => {
       return;
     }
     setLoading(true);
+    props.navigation.navigate('ConfirmTransactionPinScreen', {
+      sendTransaction
+    });
 
+  }
+  
+  const sendTransaction = async () => {
     await axios.post(apiUrl.transfer, {
       username_sender: mainState.userDetails.username,
       username_receiver: recipient,
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     borderRadius: '50%',
-    backgroundColor: '#1e1e1e', // Adjust the color as needed
+    backgroundColor: '#1e1e1e',
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'white',

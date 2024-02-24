@@ -8,6 +8,7 @@ import { phoneNumberValidation } from '../../helpers/PhoneNumberValidation';
 import apiUrl from '../../../api-urls';
 import Loader from '../../components/Loader';
 import axios from 'axios';
+import XButton from '../../components/XButton';
 //import * as styles from './LoginExistingScreen.styles';
 //import { LoginExistingScreenWrapper } from './LoginExistingScreen.styles';
 
@@ -21,7 +22,7 @@ const PhoneRequestScreen = (props) => {
         setInputPhoneNumber(truncatedText);
     }
 
-    const sendSMS = () => {
+    const sendSMS = async () => {
         if (!inputPhoneNumber || !phoneNumberValidation(inputPhoneNumber, 9)) {
             alert('Enter a valid phone number');
             return;
@@ -30,13 +31,13 @@ const PhoneRequestScreen = (props) => {
         setLoading(true);
         setMainState({...mainState, phone: inputPhoneNumber});
         
-        axios.post(apiUrl.getSMS, {
+        await axios.post(apiUrl.getSMS, {
             phone: '+48' + inputPhoneNumber
         })
             .then(res => {
                 setLoading(false);
-                props.navigation.navigate('PhoneVerificationScreen');
                 setMainState({...mainState, userDetails: {...mainState.userDetails, phone: '+48' + inputPhoneNumber}})
+                props.navigation.navigate('PhoneVerificationScreen');
                 
                 
             })
@@ -49,6 +50,7 @@ const PhoneRequestScreen = (props) => {
 
     return (
         <View style={styles.container}>
+            <XButton navigation={props.navigation} screen={'RegisterScreen'} />
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{

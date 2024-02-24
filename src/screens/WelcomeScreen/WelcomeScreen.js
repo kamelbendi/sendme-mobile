@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Text from '../../components/Text';
-import BoxFrameImageText from '../../components/BoxFrameImageText';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMainContext } from '../../store/MainContext';
 

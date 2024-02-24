@@ -54,7 +54,7 @@ const IdCollectionScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <XButton navigation={props.navigation}/>
+      <XButton navigation={props.navigation} screen={'RegisterScreen'}/>
       <View style={styles.cameraContainer}>
         <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
           <View

@@ -8,7 +8,7 @@ import Loader from '../../components/Loader';
 const ConfirmPINScreen = (props) => {
     const { mainState, setMainState } = useMainContext();
     const [loading, setLoading] = useState(false);
-    const setUpPin = (pin) => {
+    const setUpPin = async (pin) => {
         if (pin === mainState.userDetails.pin) {
             // signin && register
             var dataToSend = {
@@ -19,10 +19,11 @@ const ConfirmPINScreen = (props) => {
                 password: mainState.userDetails.password,
                 pin: mainState.userDetails.pin,
                 phone: mainState.userDetails.phone,
+                idUri: mainState.userDetails.idUri
             };
 
             setLoading(true);
-            axios.post(apiUrl.register, dataToSend)
+            await axios.post(apiUrl.register, dataToSend)
                 .then(res => {
                     setLoading(false);
                     props.navigation.navigate('RegistrationSuccessful');
@@ -41,7 +42,7 @@ const ConfirmPINScreen = (props) => {
                 <PinComponent
                     setUpPin={setUpPin}
                     title={mainState.language.sendme}
-                    headerText={mainState.language.setUpPin}
+                    headerText='Confirm your PIN code'
                     underInputText={mainState.language.fillPinCode}
                 />
             </>

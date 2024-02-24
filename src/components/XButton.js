@@ -1,13 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
-const XButton = ({ navigation }) => {
-  const goToWelcomeScreen = () => {
-    navigation.navigate('WelcomeScreen');
+const XButton = (props) => {
+  const goToScreen = () => {
+    const screen = props.screen;
+    props.navigation.navigate(screen);
   };
 
   return (
-    <TouchableOpacity onPress={goToWelcomeScreen} style={styles.closeButton} activeOpacity={0.5}>
+    <TouchableOpacity onPress={goToScreen} style={styles.closeButton} activeOpacity={0.5}>
       <Text style={styles.closeButtonText}>X</Text>
     </TouchableOpacity>
   );
