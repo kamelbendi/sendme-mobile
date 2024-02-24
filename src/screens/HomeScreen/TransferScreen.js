@@ -1,8 +1,8 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import NumberPad from '../../components/NumberPad/NumberPad';
 import Text from '../../components/Text';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useMainContext } from '../../store/MainContext';
 import Loader from '../../components/Loader';
 import axios from 'axios';
@@ -106,6 +106,7 @@ const TransferScreen = (props) => {
   } ,[]);
 
   return (
+    
     <View style={styles.container}>
       <Loader loading={loading} />
       <View style={styles.SectionStyle}>
@@ -118,32 +119,34 @@ const TransferScreen = (props) => {
               placeholder={mainState.language.enterUsername}
               placeholderTextColor="#8b9cb5"
               autoCapitalize="none"
-              onSubmitEditing={() =>
-                nameInputRef.current && nameInputRef.current.focus()
+              onSubmitEditing={() =>{
+                Keyboard.dismiss()}
               }
               blurOnSubmit={false}
-            />
+              />
             <TouchableOpacity style={styles.cameraButton} onPress={handleScanQRCode}>
               <Icon name="camera" type="font-awesome" size={20} color="white" />
             </TouchableOpacity>
       </View>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.balanceContainer}>
             <Text style={usernameExists ? styles.successTextStyle : styles.errorTextStyle}>
               {errorUsername}
             </Text>
         <Text style={styles.balanceAmount} center title heavy>{parseFloat(selectedAmount).toFixed(2)} PLN</Text>
       </View>
+      </TouchableWithoutFeedback>
       <NumberPad
           marginTop={150}
           onAdd={handleNumberPress}
           onDelete={handleDeletePress}
           onComma={handleCommaPressed}
-        />
+          />
       <View style={styles.buttonContainer}>
       <TouchableOpacity
           style={styles.button}
           onPress={handleTransferPressed}
-        >
+          >
         <Text center bold large>{mainState.language.transfer}</Text>
       </TouchableOpacity>
 

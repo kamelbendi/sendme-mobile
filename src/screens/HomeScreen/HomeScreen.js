@@ -87,6 +87,7 @@ const HomeScreen = (props) => {
   fetchData = async () => {
     getBalance(mainState, setMainState);
     getTransactions(mainState, setMainState);
+    await getAccountNumber();
     setRefreshing(false);
   }
 

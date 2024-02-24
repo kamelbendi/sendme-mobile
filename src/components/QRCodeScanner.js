@@ -21,7 +21,6 @@ const QRCodeScannerScreen = (props) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log(`Scanned type: ${type}, data: ${data}`);
     setScanned(true);
     onQRCodeScan(data);
     props.navigation.navigate('Dashboard');
