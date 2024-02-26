@@ -32,7 +32,8 @@ const ConfirmTransactionPINScreen = (props) => {
                     })
                     .catch((err) => {
                         setLoading(false);
-                        alert('Error transferring' + err);
+                        alert('Error transferring ' + err);
+                        props.navigation.navigate('Dashboard');
                     })
                   
             } catch {
@@ -43,9 +44,10 @@ const ConfirmTransactionPINScreen = (props) => {
     }
 
         return (
-            <View style={{ flex: 1}}>
+            <View style={{}}>
                 {/* <XButton navigation={props.navigation} screen={'Dashboard'} />
                 <Loader loading={loading} /> */}
+                {/* <XButton navigation={props.navigation} screen={'Dashboard'} style={{position: 'absolute', top: 10, left: 10 }} /> */}
                 {loading && <Loader loading={loading} />}
                 <PinComponent
                     setUpPin={setUpPin}

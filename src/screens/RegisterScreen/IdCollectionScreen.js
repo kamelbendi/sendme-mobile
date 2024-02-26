@@ -29,7 +29,7 @@ const IdCollectionScreen = (props) => {
     });
 
     if (result && !result.canceled) {
-      setMainState({...mainState, userDetails: {...mainState.userDetails, idUri:result.uri}});
+      setMainState({...mainState, userDetails: {...mainState.userDetails, iduri:result.uri}});
       props.navigation.navigate('SetUpPINScreen');
     }
   };

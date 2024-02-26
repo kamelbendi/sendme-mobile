@@ -11,6 +11,7 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 
 import StyledText from '../../components/Text';
@@ -259,7 +260,9 @@ const RegisterScreen = (props) => {
         <View style={{marginTop: 100}}>
           <StyledText title heavy center>{mainState.language.registrationText}</StyledText>
         </View>
-        <KeyboardAvoidingView enabled>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardAvoidingView}>
           <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
@@ -482,5 +485,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 10,
+  },
+  keyboardAvoidingView: {
+    flex: 1,
   },
 });

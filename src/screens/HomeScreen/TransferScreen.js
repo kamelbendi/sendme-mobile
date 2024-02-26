@@ -105,7 +105,7 @@ const TransferScreen = (props) => {
   onQRCodeScan = (data) => {
     setRecipient(data);
     handleRecipient(data);
-    props.navigation.navigate('Dashboard');
+    alert('QR Code scanned successfully');
   }
 
   handleScanQRCode = () => {

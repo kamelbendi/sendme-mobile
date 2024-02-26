@@ -22,17 +22,33 @@ const ConfirmPINScreen = (props) => {
                 phone: mainState.userDetails.phone,
                 idUri: mainState.userDetails.idUri
             };
+            console.log(dataToSend);
 
             setLoading(true);
-            await axios.post(apiUrl.register, dataToSend)
-                .then(res => {
-                    setLoading(false);
-                    props.navigation.navigate('RegistrationSuccessful');
+            try {  
+                // register
+                await axios.post(apiUrl.register, {
+                    name: mainState.userDetails.name,
+                    surname: mainState.userDetails.surname,
+                    username: mainState.userDetails.username,
+                    email: mainState.userDetails.email,
+                    password: mainState.userDetails.password,
+                    pin: mainState.userDetails.pin,
+                    phone: mainState.userDetails.phone,
+                    iduri: mainState.userDetails.idUri
                 })
-                .catch((err) => {
-                    setLoading(false);
-                    alert('unable to register:' + err);
-                });
+                    .then(res => {
+                        setLoading(false);
+                        props.navigation.navigate('SuccessfulRegistration');
+                    })
+                    .catch((err) => {
+                        setLoading(false);
+                        alert('unable to register:' + err);
+                    });
+            } catch {
+                alert('Error registering');
+                props.navigation.navigate('Dashboard');
+            }
 
         }
     }

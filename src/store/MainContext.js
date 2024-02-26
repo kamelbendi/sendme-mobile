@@ -19,7 +19,7 @@ export const initialMainState = {
       balance: 0,
       transactions: [],
       accountNumber: '123456789',
-      idUri: null
+      iduri: ''
     },
 }
 
